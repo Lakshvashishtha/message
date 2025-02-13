@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message for you</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2c1d27;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+        }
+        .heart-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            font-size: 2.5rem;
+            color: gold;
+            animation: float 5s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+        .message-box {
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 70%;
+            text-align: center;
+            font-size: 1rem;
+            z-index: 10;
+            position: relative;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            background: #ff66b2;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            margin: 5px;
+            color: white;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #ff3385;
+        }
+        .song {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-bg"></div>
+    <div class="message-box" id="message-box">
+        <p id="message">Hey Isha! It was great meeting you and you are an amazing person. Do you want to hear something?</p>
+        <div class="buttons" id="initial-buttons">
+            <button onclick="showMessages()">Yes</button>
+            <button disabled style="opacity: 0.5; cursor: not-allowed;">No</button>
+        </div>
+        <div class="buttons" id="message-buttons" style="display: none;">
+            <button id="prev" onclick="prevMessage()" style="display:none;">Previous</button>
+            <button id="next" onclick="nextMessage()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            "Before meeting you I was only looking to catch up and have some fun, but I have started liking you. Initially I thought I'll tell you on the concert day itself but then your statement 'With guys I look for friendship only and they are looking for relationships' stuck my mind and I stopped myself thinking that maybe it's happening because I'm here if I go back to my daily life everything will be okay.",
+            "But since things have gone back to normal I couldn't stop thinking about you. So now I have mustered up the courage to tell you how I feel rather than regretting it later.",
+            "I know you are very busy and you don't want to do anything with me or with any guy and I also know that even if everything is fine it's going to be difficult because of us staying in different cities which are very far. But whatever I know and from my experiences all I can say that I won't be able to find beautiful, intelligent, sensible and humble girl like you ever in my life again and I am willing to risk every single possibility there is to meet you again and again and again.",
+            "I expect nothing from you this message is just to express my feelings but in my defense all I can say that 'I would love to meet you again as I like talking to you and listening to you and would love to know you better and there is no rush from my side, so if you ever feel like you might give me a chance just let me know.'",
+            "I am really sorry for ruining whatever little friendship we have. All the best for your future Miss Dagar!<br><br>With love,<br> Lakshya Vashishtha"
+        ];
+
+        let index = 0;
+
+        function showMessages() {
+            document.getElementById("message").innerHTML = messages[index];
+            document.getElementById("initial-buttons").style.display = "none";
+            document.getElementById("message-buttons").style.display = "block";
+        }
+
+        function nextMessage() {
+            if (index < messages.length - 1) {
+                index++;
+                document.getElementById("message").innerHTML = messages[index];
+                document.getElementById("prev").style.display = "inline-block";
+            }
+            if (index === messages.length - 1) {
+                document.getElementById("next").style.display = "none";
+                document.getElementById("song").style.display = "block";
+                document.getElementById("audioPlayer").play();
+            }
+        }
+
+        function prevMessage() {
+            if (index > 0) {
+                index--;
+                document.getElementById("message").innerHTML = messages[index];
+                document.getElementById("next").style.display = "inline-block";
+                document.getElementById("song").style.display = "none";
+            }
+            if (index === 0) {
+                document.getElementById("prev").style.display = "none";
+            }
+        }
+
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "💛";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = Math.random() * 100 + "vh";
+                heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+                document.querySelector(".heart-bg").appendChild(heart);
+                setTimeout(() => heart.remove(), 3000);
+            }, 100);
+        }
+
+        createHearts();
+    </script>
+</body>
+</html>
